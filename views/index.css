@@ -1,0 +1,30 @@
+* {
+  margin: 0;
+  scroll-behavior: smooth;
+}
+
+:root {
+  --timeline-indicator-size: 40px;
+  --timeline-indicator-width: 5px;
+  --timeline-item-height: 150px;
+  --timeline-indicator-color: #c8102e;
+  --timeline-indicator-margin: 20px;
+  --accent-color: #c8102e;
+  --accent-color-text: white;
+  --accent-color-2: #012169;
+  --accent-color-2-text: white;
+}
+
+.title {
+  background-color: var(--accent-color);
+  color: var(--accent-color-text);
+  padding: 20px;
+  text-align: center;
+}
+
+.title-2 {
+  background-color: var(--accent-color-2);
+  color: var(--accent-color-2-text);
+  padding: 20px;
+  text-align: center;
+}

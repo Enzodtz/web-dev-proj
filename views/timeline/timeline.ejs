@@ -1,0 +1,32 @@
+<link href="timeline/timeline.css" rel="stylesheet" />
+<section id="timeline">
+  <h1 class="text-center">Timeline</h1>
+  <div class="timeline-wrapper container">
+    <% timelineItems.forEach((timelineItem, i) => { %>
+    <div class="timeline-item">
+      <div class="timeline-item-left">
+        <% if (i % 2 === 0) { %>
+        <h2><%= timelineItem.year %></h2>
+        <% } else { %>
+        <%= timelineItem.text %>
+        <% } %>
+      </div>
+      <div class="timeline-item-indicator">
+        <% if (i !== 0) { %>
+        <div class="timeline-item-indicator-upper-rect"></div>
+        <% } %>
+        <div class="timeline-item-indicator-circle"></div>
+
+        <% if (i !== timelineItems.length - 1 ) { %>
+        <div class="timeline-item-indicator-lower-rect"></div>
+        <% } %>
+      </div>
+      <div class="timeline-item-right">
+        <% if (i % 2 === 0) { %> <%= timelineItem.text %> <% } else { %>
+        <h2><%= timelineItem.year %></h2>
+        <% } %>
+      </div>
+    </div>
+    <% }) %>
+  </div>
+</section>
