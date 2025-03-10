@@ -1,5 +1,6 @@
 const express = require('express')
 const path = require('path')
+const axios = require('axios')
 
 const app = express()
 const port = 3000
@@ -9,8 +10,43 @@ app.set('views', './views')
 
 app.use(express.static(path.join(__dirname, 'views')))
 
-app.get('/', (_, res) => {
-  res.render('index', {
+app.get('/', async (_, res) => {
+  try {
+    // Fetch JSON from API
+    const response = await axios.get('http://localhost:3000/api/timelines')
+
+    // Validate data
+    var timelineItems = response.data
+
+    if (
+      typeof timelineItems !== 'object' ||
+      !('timelineItems' in timelineItems) ||
+      typeof timelineItems.timelineItems !== 'object'
+    ) {
+      res.status(500).send('Invalid JSON received from API!')
+    }
+
+    let valid = true
+    timelineItems.timelineItems.forEach((item) => {
+      if (typeof item !== 'object' || !('year' in item) || !('text' in item)) {
+        valid = false
+      }
+    })
+    if (!valid) {
+      res.status(500).send('Invalid JSON received from API!')
+    }
+
+    res.render('index', timelineItems)
+    // Render with JSON from API
+  } catch (error) {
+    // Error handling
+    res.status(500).json({ error: error.message })
+  }
+})
+
+app.get('/api/timelines', (_, res) => {
+  // Return JSON from API
+  res.json({
     timelineItems: [
       {
         year: 1969,
@@ -46,10 +82,6 @@ app.get('/', (_, res) => {
       },
     ],
   })
-})
-
-app.get('/api/users', (_, res) => {
-  res.send('Hello World from api!')
 })
 
 app.listen(port)
